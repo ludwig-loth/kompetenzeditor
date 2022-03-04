@@ -28,16 +28,6 @@
             >
               <v-icon>mdi-delete-sweep</v-icon> leeren</v-btn
             >
-            <!-- <v-btn
-              tile
-              outlined
-              color="primary"
-              class="mr-1"
-              @click="selectCopyText()"
-            > 
-              <v-icon>mdi-content-copy</v-icon>
-              Text kopieren
-            </v-btn> -->
             <v-btn
               tile
               depressed
@@ -59,7 +49,7 @@
               :highlight="highlight"
               :placeholder="textareaPlaceholder"
               caseSensitive
-              @input="tokenizeIt(text)"
+              @input="nlp(text)"
             />
             <!-- <v-textarea
               id="textArea"
@@ -242,6 +232,10 @@
                 Es wird nur reiner Text unterstützt und keine Listen oder andere
                 Formatierungmöglichkeiten.
               </li>
+              <li>
+                bitte keine ungewöhnlichen Abkürzungen verwenden wie insbes. <br>
+                gängie Abkürzungen wie ca. oder bzw. sind kein Problem
+              </li>
             </ul>
           </div>
         </v-card-text>
@@ -285,7 +279,6 @@
   </v-row>
 </template>
 <script>
-import tokenizer from '../plugins/tokenizer'
 import { db } from '../plugins/db'
 // import levenshtein from '../plugins/levenshtein'
 
@@ -336,24 +329,23 @@ export default {
       // da diese eine spezielle Farbe haben im Conteneditable werden sie darüber gesucht und in einer Nodelist abgelegt.
       // NodeList.length
       setTimeout(() => {
-        const texBox = document.querySelector('#textBox')
-        const goodVerbenCount = texBox.querySelectorAll(
-          'span[style^="background-color:lightgreen;"]'
-        )
-        const badVerbenCount = texBox.querySelectorAll(
-          'span[style^="background-color:lightcoral;"]'
-        )
-        const einleitungenCount = texBox.querySelectorAll(
-          'span[style^="background-color:yellow;"]'
-        )
-        this.score = 0
-        this.perfVal = 0
-        this.goodVerbenCount = goodVerbenCount.length
-        this.badVerbenCount = badVerbenCount.length
-        this.einleitungenCount = einleitungenCount.length
-
-        this.checkEinleitung()
-        this.checkVerben()
+        // const texBox = document.querySelector('#textBox')
+        // const goodVerbenCount = texBox.querySelectorAll(
+        //   'span[style^="background-color:lightgreen;"]'
+        // )
+        // const badVerbenCount = texBox.querySelectorAll(
+        //   'span[style^="background-color:lightcoral;"]'
+        // )
+        // const einleitungenCount = texBox.querySelectorAll(
+        //   'span[style^="background-color:yellow;"]'
+        // )
+        // this.score = 0
+        // this.perfVal = 0
+        // this.goodVerbenCount = goodVerbenCount.length
+        // this.badVerbenCount = badVerbenCount.length
+        // this.einleitungenCount = einleitungenCount.length
+        // this.checkEinleitung()
+        // this.checkVerben()
       }, 500)
     },
   },
@@ -364,8 +356,6 @@ export default {
   methods: {
     foobar(val) {
       alert(val)
-      // console.log(val)
-      // console.log(this.compID)
     },
     closeDialog() {
       // schließe Info-Dialog
@@ -375,22 +365,23 @@ export default {
         this.textareaInfo = false
       }, 500)
     },
-    selectCopyText() {
-      // momentan nicht genutzt
-      this.selectedText = document.getElementById('textBox')
-      this.selectedText.select()
-      document.execCommand('copy')
-    },
-    tokenizeIt(valTxt) {
-      // sätze zählen und identifizieren pro satz
-      setTimeout(() => {
-        this.sentences = tokenizer.tokenizeSentence(valTxt)
-        if (this.badVerbenCount > 0) {
-          this.badVerbRule = true
-        } else {
-          this.badVerbRule = false
+    nlp(valTxt) {
+      const sendTxtSpacy= async () => {
+        try {
+          const res = await this.$axios.post('/api/sents_dep', {
+            text: valTxt,
+            model: 'de_core_news_sm',
+          })
+          console.log(res.data)
+          this.sentences = res.data;
+        } catch (err) {
+          // Handle Error Here
+          console.error(err)
+          console.error(err.request)
+          console.error(err.message)
         }
-      }, 200)
+      }
+      sendTxtSpacy()
     },
     fillHighlight() {
       // entsprechende Einträge aus Tabelle holen und in Array pushen
@@ -423,68 +414,68 @@ export default {
               this.einleitungenWords.push(item.person)
               this.einleitungenWords.push(item.adjektiv)
               this.einleitungenWords.push(item.teilnahme)
-              this.highlight.push({
-                text: item.person,
-                style: 'background-color:yellow; padding:3px 0px 3px 3px',
-                caseSensitive: false,
-              })
-              this.highlight.push({
-                text: item.adjektiv,
-                style: 'background-color:yellow; padding:3px 0px 3px 3px',
-                caseSensitive: false,
-              })
-              this.highlight.push({
-                text: item.teilnahme,
-                style: 'background-color:yellow; padding:3px 0px 3px 3px',
-                caseSensitive: false,
-              })
+              // this.highlight.push({
+              //   text: item.person,
+              //   style: 'background-color:yellow; padding:3px 0px 3px 3px',
+              //   caseSensitive: false,
+              // })
+              // this.highlight.push({
+              //   text: item.adjektiv,
+              //   style: 'background-color:yellow; padding:3px 0px 3px 3px',
+              //   caseSensitive: false,
+              // })
+              // this.highlight.push({
+              //   text: item.teilnahme,
+              //   style: 'background-color:yellow; padding:3px 0px 3px 3px',
+              //   caseSensitive: false,
+              // })
             })
           })
         )
     },
-    checkEinleitung() {
-      const words = this.einleitungenWords
-      const text = this.sentences[0].toLowerCase()
-      for (let i = 0; i < words.length; i++) {
-        if (text.includes(words[i])) {
-          this.score = this.score + 10
-        }
-      }
-    },
-    checkVerben() {
-      if (this.goodVerbenCount === this.sentences.length) {
-        this.score = this.score + 70
-        this.perfVal = this.perfVal + 25
-      }
-      const words = this.goodVerben
-      this.tempScore = 0
-      for (let i = 0; i < this.sentences.length; i++) {
-        const text = this.sentences[i].toLowerCase()
-        console.log(text)
-        words.forEach((el) => {
-          if (text.includes(el)) {
-            // console.log(true)
-            console.log(el)
-            // this.score = this.score + 10
-            this.tempScore = this.tempScore + 10
-            this.perfVal = this.perfVal + 5
-          } else {
-            // this.tempScore = this.tempScore - 10
-            console.log('bad')
-          }
-        })
-        console.log(this.tempScore)
-      }
-    },
-    sperateHighlight() {
-      this.highlight.forEach((element) => {
-        if (element.style === 'background-color:lightgreen; padding:3px') {
-          // element.style = "background-color:white; padding:3px";
-        } else {
-          console.log(element.style)
-        }
-      })
-    },
+    // checkEinleitung() {
+    //   const words = this.einleitungenWords
+    //   const text = this.sentences[0].toLowerCase()
+    //   for (let i = 0; i < words.length; i++) {
+    //     if (text.includes(words[i])) {
+    //       this.score = this.score + 10
+    //     }
+    //   }
+    // },
+    // checkVerben() {
+    //   if (this.goodVerbenCount === this.sentences.length) {
+    //     this.score = this.score + 70
+    //     this.perfVal = this.perfVal + 25
+    //   }
+    //   const words = this.goodVerben
+    //   this.tempScore = 0
+    //   for (let i = 0; i < this.sentences.length; i++) {
+    //     const text = this.sentences[i].toLowerCase()
+    //     console.log(text)
+    //     words.forEach((el) => {
+    //       if (text.includes(el)) {
+    //         // console.log(true)
+    //         console.log(el)
+    //         // this.score = this.score + 10
+    //         this.tempScore = this.tempScore + 10
+    //         this.perfVal = this.perfVal + 5
+    //       } else {
+    //         // this.tempScore = this.tempScore - 10
+    //         console.log('bad')
+    //       }
+    //     })
+    //     console.log(this.tempScore)
+    //   }
+    // },
+    // sperateHighlight() {
+    //   this.highlight.forEach((element) => {
+    //     if (element.style === 'background-color:lightgreen; padding:3px') {
+    //       // element.style = "background-color:white; padding:3px";
+    //     } else {
+    //       console.log(element.style)
+    //     }
+    //   })
+    // },
     saveComp() {
       this.dialogAction = false
       db.kompetenzbeschreibungen

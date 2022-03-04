@@ -34,11 +34,22 @@ export default {
     foobar1() {
       console.log('foobar1')
     },
-    async foobar2() {
-      console.log('foobar2')
-      const res = await this.$axios.get('/api/ui')
-      console.log(res.data)
-      return res
+    foobar2() {
+      const sendPostRequest = async () => {
+        try {
+          const resp = await this.$axios.post('/api/sents_dep', {
+            text: this.inputTxt,
+            model: 'de_core_news_sm',
+          })
+          console.log(resp.data)
+        } catch (err) {
+          // Handle Error Here
+          console.error(err)
+          console.error(err.request)
+          console.error(err.message)
+        }
+      }
+      sendPostRequest()
     },
     async foobar3() {
       const res = await this.$axios.get('/api/version')
