@@ -120,7 +120,7 @@ db.on('populate', function () {
     },
     {
       name: 'Grundlagen der Informatik',
-      text: 'Die Studierenden erlangen grundlegende Kenntnisse der Informatik, die für das Verständnis und die Beurteilung von Aufgabenstellungen in der IT erforderlich sind. Die Studierenden kennen die Grundbegriffe der Informatik und wissen, wie Daten repräsentiert und verarbeitet werden. Ferner kennen sie die prinzipielle Funktionsweise von Rechnersystemen, insbes. der Von-Neumann-Architektur, und Wissen um den Aufbau, den Komponenten und die Nutzung von Betriebssystemen. Sie kennen grundlegende Konzepte der Arbeit mit Kommandozeilen und können diese für verschiedene Aufgaben benutzen.',
+      text: 'Die Studierenden erlangen grundlegende Kenntnisse der Informatik, die für das Verständnis und die Beurteilung von Aufgabenstellungen in der IT erforderlich sind. Die Studierenden kennen die Grundbegriffe der Informatik und wissen, wie Daten repräsentiert und verarbeitet werden. Ferner kennen sie die prinzipielle Funktionsweise von Rechnersystemen, insbesondere der Von-Neumann-Architektur, und Wissen um den Aufbau, den Komponenten und die Nutzung von Betriebssystemen. Sie kennen grundlegende Konzepte der Arbeit mit Kommandozeilen und können diese für verschiedene Aufgaben benutzen.',
       saetze: 4,
       wertung: 33,
       final: false,

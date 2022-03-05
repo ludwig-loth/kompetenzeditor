@@ -1,27 +1,63 @@
 <template>
-  <v-row class="pa-3">
-    <v-col class="text-center">
-      <v-btn color="primary" @click="getPOS()">foo1</v-btn>
-      <v-btn color="primary" @click="foobar2()">foo2</v-btn>
-      <v-btn color="primary" @click="foobar3()">foo3</v-btn>
-    </v-col>
-  </v-row>
+  <v-container>
+    <v-row>
+      <v-col class="text-center">
+        <v-btn class="ma-1" tile color="primary" @click="foobar0()">get /ui</v-btn>
+        <v-btn class="ma-1" tile color="primary" @click="foobar1()"
+          >post and get /dep</v-btn
+        >
+        <v-btn class="ma-1" tile color="primary" @click="foobar3()"
+          >post and get /ent</v-btn
+        >
+        <v-btn class="ma-1" tile color="primary" @click="foobar4()"
+          >post and get /sents</v-btn
+        >
+        <v-btn class="ma-1" color="primary" tile @click="foobar2()"
+          >post and get /sents_dep</v-btn
+        >
+        <v-btn class="ma-1" tile color="primary" @click="foobar5()"
+          >get /models</v-btn
+        >
+        <!-- <v-btn class="ma-1" color="primary" @click="foobar6()"
+          >get /{model}/schema</v-btn
+        > -->
+        <v-btn class="ma-1" tile color="primary" @click="foobar7()"
+          >get /version</v-btn
+        >
+      </v-col>
+    </v-row>
+    <v-row class="pa-3">
+      <v-col cols="12">
+        <v-sheet
+          color="grey lighten-1"
+          class="pa-5"
+          v-html="response"
+        ></v-sheet>
+      </v-col>
+    </v-row>
+  </v-container>
 </template>
 <script>
 export default {
   data: () => ({
+    response: '',
     inputTxt:
-      'Nach erfolgreicher Teilnahme an dem Modul Research Forschungsprojekt. Sie verstehen die Prinzipien der Rechnerkommunikation, der relevanten Netztechnologien sowie die Funktionsweise des Internet und können diese in anderen Fächern während des Studiums einsetzen, um z.B. Internetanwendungen und -dienste zu konzipieren und zu realisieren. Die Studierenden erkennen die Notwendigkeit des Schutzes der Privatsphäre bei der Nutzung von Rechnernetzen und nutzen geeignete Schutzmaßnahmen. In den Praktika verwenden die Studierenden praxisnahe Werkzeuge in 2er- und 4er-Teams im Netzwerk-Labor. Durch dieses explorative Lernen werden zusätzlich Team- und Kommunikationsfähigkeiten verstärkt.',
+      'Dies ist ein Test. Ich teste hiermit spaCy. Jemand schreibt einen Satz, der einen Nebensatz enhält. Die Lehrenden werden diese Anwendung bald nutzen können.',
   }),
   methods: {
-    getPOS() {
+    foobar0() {
+      // const res = await this.$axios.get(':8080/api/ui')
+      this.response =
+        "<a href='http://127.0.0.1:8080/ui/' target='_blank'>Die UI wird auf ''http://127.0.0.1:8080/ui/'' angezeigt.</a>"
+    },
+    foobar1() {
       const sendPostRequest = async () => {
         try {
-          const resp = await this.$axios.post('/api/dep', {
+          const res = await this.$axios.post('/api/dep', {
             text: this.inputTxt,
             model: 'de_core_news_sm',
           })
-          console.log(resp.data)
+          this.response = res.data
         } catch (err) {
           // Handle Error Here
           console.error(err)
@@ -30,18 +66,15 @@ export default {
         }
       }
       sendPostRequest()
-    },
-    foobar1() {
-      console.log('foobar1')
     },
     foobar2() {
       const sendPostRequest = async () => {
         try {
-          const resp = await this.$axios.post('/api/sents_dep', {
+          const res = await this.$axios.post('/api/sents_dep', {
             text: this.inputTxt,
             model: 'de_core_news_sm',
           })
-          console.log(resp.data)
+          this.response = res.data
         } catch (err) {
           // Handle Error Here
           console.error(err)
@@ -51,9 +84,53 @@ export default {
       }
       sendPostRequest()
     },
-    async foobar3() {
+    foobar3() {
+      const sendPostRequest = async () => {
+        try {
+          const res = await this.$axios.post('/api/ent', {
+            text: this.inputTxt,
+            model: 'de_core_news_sm',
+          })
+          this.response = res.data
+        } catch (err) {
+          // Handle Error Here
+          console.error(err)
+          console.error(err.request)
+          console.error(err.message)
+        }
+      }
+      sendPostRequest()
+    },
+    foobar4() {
+      const sendPostRequest = async () => {
+        try {
+          const res = await this.$axios.post('/api/sents', {
+            text: this.inputTxt,
+            model: 'de_core_news_sm',
+          })
+          this.response = res.data
+        } catch (err) {
+          // Handle Error Here
+          console.error(err)
+          console.error(err.request)
+          console.error(err.message)
+        }
+      }
+      sendPostRequest()
+    },
+    async foobar5() {
+      const res = await this.$axios.get('/api/models')
+      this.response = res.data
+      return res
+    },
+    // async foobar6() {
+    //   const res = await this.$axios.get('/api/de_core_news_sm/schema')
+    //   this.response = res.data
+    //   return res
+    // },
+    async foobar7() {
       const res = await this.$axios.get('/api/version')
-      console.log(res.data)
+      this.response = res.data
       return res
     },
   },
