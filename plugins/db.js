@@ -4,12 +4,20 @@ export const db = new Dexie('kompetenzDB')
 db.version(1).stores({
   verben: '++id, stufe, verb',
   schlechteVerben: '++id, verb',
-  einleitungen: '++id, person, adjektiv, teilnahme',
+  modalVerben: '++id, verb',
+  einleitungen: '++id, *person, *adjektiv, *teilnahme, *modul', // MultiEntry Index
   kompetenzbeschreibungen: '++id, name, text, saetze, wertung, final',
 })
 db.on('populate', function () {
   db.einleitungen.bulkAdd([
-    { person: 'studierende', adjektiv: 'erfolgreiche', teilnahme: 'teilnahme' },
+    {
+      person: 'Studierende, Student, Studentin, Hörer, Hochschüler',
+      adjektiv:
+        'erfolgreich, positiv, optimal, bestmöglich, effizient, wirksam, angemessen',
+      teilnahme: 'Teilnahme, Engagement, Aktivität, Beteiligung',
+      modul:
+        'Betriebswirtschaftslehre 1, Digitaltechnik und Rechnersysteme, Mathematische Grundlagen der Informatik, Programmierung 1, Programmiermethoden und -werkzeuge, Technische Grundlagen der Informatik ',
+    },
   ])
   db.verben.bulkAdd([
     { stufe: 'erinnern', verb: 'erinnern' },
@@ -22,7 +30,6 @@ db.on('populate', function () {
     { stufe: 'erinnern', verb: 'auflisten' },
     { stufe: 'erinnern', verb: 'wiederholen' },
     { stufe: 'erinnern', verb: 'darlegen' },
-    { stufe: 'verstehen', verb: 'verstehen' },
     { stufe: 'verstehen', verb: 'interpretieren' },
     { stufe: 'verstehen', verb: 'klären' },
     { stufe: 'verstehen', verb: 'paraphrasieren' },
@@ -106,7 +113,7 @@ db.on('populate', function () {
   db.kompetenzbeschreibungen.bulkAdd([
     {
       name: 'Forschungsprojekt',
-      text: 'Nach erfolgreicher Teilnahme an dem Modul Research Forschungsprojekt. Die Studierenden verstehen die Prinzipien der Rechnerkommunikation, der relevanten Netztechnologien sowie die Funktionsweise des Internet und können diese in anderen Fächern während des Studiums einsetzen, um z.B. Internetanwendungen und -dienste zu konzipieren und zu realisieren. Die Studierenden erkennen die Notwendigkeit des Schutzes der Privatsphäre bei der Nutzung von Rechnernetzen und nutzen geeignete Schutzmaßnahmen. In den Praktika verwenden die Studierenden praxisnahe Werkzeuge in 2er- und 4er-Teams im Netzwerk-Labor. Durch dieses explorative Lernen werden zusätzlich Team- und Kommunikationsfähigkeiten verstärkt.',
+      text: 'Nach erfolgreicher Teilnahme an dem Modul Forschungsprojekt. Die Studierenden verstehen die Prinzipien der Rechnerkommunikation, der relevanten Netztechnologien sowie die Funktionsweise des Internet und können diese in anderen Fächern während des Studiums einsetzen, um z.B. Internetanwendungen und -dienste zu konzipieren und zu realisieren. Die Studierenden erkennen die Notwendigkeit des Schutzes der Privatsphäre bei der Nutzung von Rechnernetzen und nutzen geeignete Schutzmaßnahmen. In den Praktika verwenden die Studierenden praxisnahe Werkzeuge in 2er- und 4er-Teams im Netzwerk-Labor. Durch dieses explorative Lernen werden zusätzlich Team- und Kommunikationsfähigkeiten verstärkt.',
       saetze: 5,
       wertung: 42,
       final: false,
@@ -129,6 +136,26 @@ db.on('populate', function () {
   db.schlechteVerben.bulkAdd([
     {
       verb: 'wissen',
+    },
+    {
+      verb: 'kennen',
+    },
+    {
+      verb: 'erlangen',
+    },
+    {
+      verb: 'beherrschen',
+    },
+    {
+      verb: 'erwerben',
+    },
+    {
+      verb: 'verstehen',
+    },
+  ])
+  db.modalVerben.bulkAdd([
+    {
+      verb: 'können',
     },
   ])
 })

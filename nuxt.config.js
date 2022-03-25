@@ -4,10 +4,6 @@ export default {
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
-  // server: {
-  //   host: '0.0.0.0', // default: localhost
-  // },
-
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
     titleTemplate: '%s - kompetenzeditor',
@@ -26,9 +22,11 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    { src: '~/plugins/tokenizer' },
+    // { src: '~/plugins/tokenizer' },
     { src: '~/plugins/highlightinput' },
     { src: '~/plugins/levenshtein' },
+    { src: '~/plugins/indexOfEnd' },
+    // { src: '~/plugins/contenteditable.js' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
@@ -50,14 +48,9 @@ export default {
     '@nuxtjs/pwa',
   ],
 
-  // Axios module configuration: https://go.nuxtjs.dev/config-axios
-  // axios: {
-  //   // proxy: true, // Can be also an object with default options
-  //   baseURL: 'http://127.0.0.1:8080',
-  //   // baseURL: 'https://bbieniek-spacyapi-w9ki9.ondigitalocean.app',
-  // },
-
   axios: {
+    // baseURL: 'http://127.0.0.1:8080',
+    // baseURL: 'https://bbieniek-spacyapi-w9ki9.ondigitalocean.app',
     // Do away with the baseUrl when using proxy
     proxy: true,
   },
@@ -69,6 +62,12 @@ export default {
       // target: 'https://bbieniek-spacyapi-w9ki9.ondigitalocean.app',
       pathRewrite: { '^/api/': '' },
     },
+  },
+
+  loading: {
+    // loading bar for progress of axios request
+    color: '#03A9F4',
+    height: '3px',
   },
 
   // PWA module configuration: https://go.nuxtjs.dev/pwa

@@ -1,5 +1,10 @@
 # Kompetenzeditor
 
+## KNOWN BUGS
+
+- `kennen` und `erkennen` im gleichen Test führen zu unerwartetem Verhalten
+  - kennen wird dann icht mehr als gutes Verb erkannt :(
+
 ## Setup
 
 ### **spaCy Server**
@@ -118,7 +123,8 @@ http://127.0.0.1:8080/ui/
 - [x] [js-levenshtein](https://github.com/gustf/js-levenshtein)
 - [ ] [nnsplit](https://github.com/bminixhofer/nnsplit) 
 - [ ] [spacy](https://github.com/ines/spacy-js)
-- [x] [spacy-nlp](https://github.com/kengz/spacy-nlp)
+- [ ] [spacy-nlp](https://github.com/kengz/spacy-nlp)
+- [x] [vue-contenteditable](https://github.com/hl037/vue-contenteditable) 
 
 ## Ideen
 - evtl. doch auf eine Client Server Arch setzen

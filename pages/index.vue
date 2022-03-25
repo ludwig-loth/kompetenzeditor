@@ -2,7 +2,7 @@
   <v-container>
     <v-row>
       <v-col cols="12" sm="6" md="4" lg="3" xl="2">
-        <v-card height="200" outlined tile elevation="1"
+        <v-card height="200" outlined elevation="1"
           ><v-card-text style="height: 148px" class="d-flex justify-center"
             ><v-icon style="font-size: 60px"
               >mdi-text-box-plus</v-icon
@@ -12,7 +12,6 @@
             ><v-btn
               color="success"
               block
-              tile
               depressed
               @click="setCurrCompID(0)"
               >neu hinzufügen</v-btn
@@ -29,7 +28,7 @@
         lg="3"
         xl="2"
       >
-        <v-card height="200" outlined tile elevation="1">
+        <v-card height="200" outlined elevation="1">
           <v-card-title>
             <span class="d-inline-block text-truncate">
               {{ item.title }}
@@ -49,7 +48,6 @@
             <v-btn
               class="col-10"
               color="primary"
-              tile
               depressed
               @click="setCurrCompID(item.id)"
               >öffnen</v-btn

@@ -63,7 +63,7 @@
       >
         <v-toolbar-title class="white--text" v-text="title" />
       </NuxtLink>
-      <v-chip color="red" class="ml-3 rounded-0" label dark>Beta</v-chip>
+      <v-chip color="red" class="ml-3" label dark>Beta</v-chip>
       <v-spacer />
     </v-app-bar>
     <v-main>
@@ -114,7 +114,11 @@ export default {
   },
   created() {
     // this.fillCompLinkList()
+    // eslint-disable-next-line nuxt/no-globals-in-created
+    // eslint-disable-next-line nuxt/no-globals-in-created
+
   },
+  mounted() {},
   methods: {
     // fillCompLinkList() {
     //   db.kompetenzbeschreibungen.toArray((comp) => {
@@ -138,5 +142,23 @@ export default {
 <style>
 html {
   min-width: 850px !important;
+  overflow-y: auto;
+}
+/* width */
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+/* Track */
+::-webkit-scrollbar-track {
+  background: rgba(158, 158, 158, 0.3);
+}
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: rgba(158, 158, 158, 0.6);
+}
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(158, 158, 158, 1);
 }
 </style>

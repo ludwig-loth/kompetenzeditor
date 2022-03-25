@@ -2,7 +2,9 @@
   <v-container>
     <v-row>
       <v-col class="text-center">
-        <v-btn class="ma-1" tile color="primary" @click="foobar0()">get /ui</v-btn>
+        <v-btn class="ma-1" tile color="primary" @click="foobar0()"
+          >get /ui</v-btn
+        >
         <v-btn class="ma-1" tile color="primary" @click="foobar1()"
           >post and get /dep</v-btn
         >
@@ -27,6 +29,12 @@
       </v-col>
     </v-row>
     <v-row class="pa-3">
+      <v-col v-if="bspText" class="ma-3 pa-3">
+        basierend auf diesem Text: <br>
+        Dies ist ein Test. Ich teste hiermit spaCy. Jemand schreibt einen Satz,
+        der einen Nebensatz enhält. Die Lehrenden werden diese Anwendung bald
+        nutzen können.
+      </v-col>
       <v-col cols="12">
         <v-sheet
           color="grey lighten-1"
@@ -41,18 +49,21 @@
 export default {
   data: () => ({
     response: '',
+    bspText: false,
     inputTxt:
       'Dies ist ein Test. Ich teste hiermit spaCy. Jemand schreibt einen Satz, der einen Nebensatz enhält. Die Lehrenden werden diese Anwendung bald nutzen können.',
   }),
   methods: {
     foobar0() {
       // const res = await this.$axios.get(':8080/api/ui')
+      this.bspText = false
       this.response =
         "<a href='http://127.0.0.1:8080/ui/' target='_blank'>Die UI wird auf ''http://127.0.0.1:8080/ui/'' angezeigt.</a>"
     },
     foobar1() {
       const sendPostRequest = async () => {
         try {
+          this.bspText = true
           const res = await this.$axios.post('/api/dep', {
             text: this.inputTxt,
             model: 'de_core_news_sm',
@@ -70,6 +81,7 @@ export default {
     foobar2() {
       const sendPostRequest = async () => {
         try {
+          this.bspText = true
           const res = await this.$axios.post('/api/sents_dep', {
             text: this.inputTxt,
             model: 'de_core_news_sm',
@@ -87,6 +99,7 @@ export default {
     foobar3() {
       const sendPostRequest = async () => {
         try {
+          this.bspText = true
           const res = await this.$axios.post('/api/ent', {
             text: this.inputTxt,
             model: 'de_core_news_sm',
@@ -104,6 +117,7 @@ export default {
     foobar4() {
       const sendPostRequest = async () => {
         try {
+          this.bspText = true
           const res = await this.$axios.post('/api/sents', {
             text: this.inputTxt,
             model: 'de_core_news_sm',
@@ -119,6 +133,7 @@ export default {
       sendPostRequest()
     },
     async foobar5() {
+      this.bspText = false
       const res = await this.$axios.get('/api/models')
       this.response = res.data
       return res
@@ -129,6 +144,7 @@ export default {
     //   return res
     // },
     async foobar7() {
+      this.bspText = false
       const res = await this.$axios.get('/api/version')
       this.response = res.data
       return res

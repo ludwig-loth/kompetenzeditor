@@ -2,6 +2,7 @@
 export const state = () => ({
   currCompetenceID: null,
   lastSavedCompetenceID: null,
+  // contentEditableTxt: [''],
 })
 
 // contains your actions
@@ -15,6 +16,9 @@ export const mutations = {
   setLastSavedCompetenceID(state, id) {
     state.lastSavedCompetenceID = id
   },
+  // setCreatePostText(state, payload) {
+  //   state.contentEditableTxt[0] = payload
+  // },
 }
 // your root getters
 export const getters = {
