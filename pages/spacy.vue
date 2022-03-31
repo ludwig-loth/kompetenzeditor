@@ -20,9 +20,6 @@
         <v-btn class="ma-1" tile color="primary" @click="foobar5()"
           >get /models</v-btn
         >
-        <!-- <v-btn class="ma-1" color="primary" @click="foobar6()"
-          >get /{model}/schema</v-btn
-        > -->
         <v-btn class="ma-1" tile color="primary" @click="foobar7()"
           >get /version</v-btn
         >
@@ -30,7 +27,7 @@
     </v-row>
     <v-row class="pa-3">
       <v-col v-if="bspText" class="ma-3 pa-3">
-        basierend auf diesem Text: <br>
+        basierend auf diesem Text: <br />
         Dies ist ein Test. Ich teste hiermit spaCy. Jemand schreibt einen Satz,
         der einen Nebensatz enhält. Die Lehrenden werden diese Anwendung bald
         nutzen können.
@@ -55,7 +52,6 @@ export default {
   }),
   methods: {
     foobar0() {
-      // const res = await this.$axios.get(':8080/api/ui')
       this.bspText = false
       this.response =
         "<a href='http://127.0.0.1:8080/ui/' target='_blank'>Die UI wird auf ''http://127.0.0.1:8080/ui/'' angezeigt.</a>"
@@ -138,11 +134,6 @@ export default {
       this.response = res.data
       return res
     },
-    // async foobar6() {
-    //   const res = await this.$axios.get('/api/de_core_news_sm/schema')
-    //   this.response = res.data
-    //   return res
-    // },
     async foobar7() {
       this.bspText = false
       const res = await this.$axios.get('/api/version')

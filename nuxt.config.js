@@ -22,11 +22,8 @@ export default {
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
   plugins: [
-    // { src: '~/plugins/tokenizer' },
-    { src: '~/plugins/highlightinput' },
     { src: '~/plugins/levenshtein' },
     { src: '~/plugins/indexOfEnd' },
-    // { src: '~/plugins/contenteditable.js' },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

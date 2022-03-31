@@ -6,7 +6,8 @@ db.version(1).stores({
   schlechteVerben: '++id, verb',
   modalVerben: '++id, verb',
   einleitungen: '++id, *person, *adjektiv, *teilnahme, *modul', // MultiEntry Index
-  kompetenzbeschreibungen: '++id, name, text, saetze, wertung, final',
+  kompetenzbeschreibungen:
+    '++id, name, text, saetze, wertung, datum, datumUnix',
 })
 db.on('populate', function () {
   db.einleitungen.bulkAdd([
@@ -112,25 +113,20 @@ db.on('populate', function () {
   ])
   db.kompetenzbeschreibungen.bulkAdd([
     {
-      name: 'Forschungsprojekt',
-      text: 'Nach erfolgreicher Teilnahme an dem Modul Forschungsprojekt. Die Studierenden verstehen die Prinzipien der Rechnerkommunikation, der relevanten Netztechnologien sowie die Funktionsweise des Internet und können diese in anderen Fächern während des Studiums einsetzen, um z.B. Internetanwendungen und -dienste zu konzipieren und zu realisieren. Die Studierenden erkennen die Notwendigkeit des Schutzes der Privatsphäre bei der Nutzung von Rechnernetzen und nutzen geeignete Schutzmaßnahmen. In den Praktika verwenden die Studierenden praxisnahe Werkzeuge in 2er- und 4er-Teams im Netzwerk-Labor. Durch dieses explorative Lernen werden zusätzlich Team- und Kommunikationsfähigkeiten verstärkt.',
-      saetze: 5,
-      wertung: 42,
-      final: false,
+      name: 'Arbeits- und Führungstechniken',
+      text: 'Die Studierenden kennen die wesentlichen Arbeits- und Führungstechniken in betrieblicher Arbeit/Projektarbeit und können Erfahrungen im Umgang mit diesen theoriegeleitet reflektieren. Sie verstehen Mechanismen, welche die Kommunikation in Teams beeinflussen, kennen Methoden und Möglichkeiten des Selbstmanagements und sind geschult im Umgang mit Konfliktsituationen.',
+      saetze: 2,
+      wertung: 0,
+      datum: '31.03.2022',
+      datumUnix: 1648740624,
     },
     {
       name: 'Research Project',
-      text: 'Die Studierenden beherrschen den Umgang mit grundlegenden Begriffen und Methoden der Mathematik hinter der Computergrafik und können diese zur Lösung anwendungsbezogener Fragestellungen anwenden. Die Studierenden erwerben Kompetenzen, die ihnen erlauben, selbständig weiterführende Lernprozesse zu gestalten und sich mit Fachvertretern und mit Laien über Ideen, Probleme und Lösungen auszutauschen.',
-      saetze: 5,
-      wertung: 42,
-      final: false,
-    },
-    {
-      name: 'Grundlagen der Informatik',
-      text: 'Die Studierenden erlangen grundlegende Kenntnisse der Informatik, die für das Verständnis und die Beurteilung von Aufgabenstellungen in der IT erforderlich sind. Die Studierenden kennen die Grundbegriffe der Informatik und wissen, wie Daten repräsentiert und verarbeitet werden. Ferner kennen sie die prinzipielle Funktionsweise von Rechnersystemen, insbesondere der Von-Neumann-Architektur, und Wissen um den Aufbau, den Komponenten und die Nutzung von Betriebssystemen. Sie kennen grundlegende Konzepte der Arbeit mit Kommandozeilen und können diese für verschiedene Aufgaben benutzen.',
-      saetze: 4,
-      wertung: 33,
-      final: false,
+      text: 'Die Studierenden wenden Strategien der wissenschaftlichen Recherche und Einschätzung der Qualität wissenschaftlicher Ergebnisse im Rahmen eines konkreten Forschungszieles an. Die Studierenden können für eine gegebene Problemstellung wissenschaftlich nachvollziehbar Forschungsfragen oder Hypothesen ableiten. Die Studierenden können ihr Forschungsprojekt selbständig definieren. Die Studierende können ihren eigenen Arbeitsprozess und Zwischenergebnisse reflektierend in Worte fassen und daraus korrigierende Schlüsse ziehen im Hinblick auf die Erreichung des Forschungszieles. Die Studierenden können aus den etablierten Methoden eines Forschungsgebietes diejenigen begründet auswählen und anwenden, welche zur Erreichung der konkreten Forschungs(teil)- ziele geeignet sind. Die Studierenden können Ergebnisse eigener und fremder Forschungsarbeiten objektiv beschreiben, interpretieren und kritisch hinterfragen.',
+      saetze: 6,
+      wertung: 62.5,
+      datum: '01.01.2022',
+      datumUnix: 1641072734,
     },
   ])
   db.schlechteVerben.bulkAdd([

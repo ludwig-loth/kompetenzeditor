@@ -24,25 +24,6 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-      <!-- <v-list>
-        <v-list-item-group v-model="currentComp" color="primary">
-          <v-list-item
-            v-for="(item, i) in compLinks"
-            :key="i"
-            exact
-            link
-            @click="setCurrCompID(item.id)"
-          >
-            <v-list-item-action class="d-inline">
-              <v-icon>mdi-text-box</v-icon>
-              <span class="text-subtitle-2">{{ item.nmbr }}</span>
-            </v-list-item-action>
-            <v-list-item-content>
-              <v-list-item-title v-text="item.title" />
-            </v-list-item-content>
-          </v-list-item>
-        </v-list-item-group>
-      </v-list> -->
       <template v-slot:append>
         <div class="py-2">
           <v-btn block depressed tile @click.stop="miniVariant = !miniVariant">
@@ -79,8 +60,6 @@
 </template>
 
 <script>
-// import { db } from '../plugins/db'
-
 export default {
   data() {
     return {
@@ -97,46 +76,6 @@ export default {
       currentComp: null,
     }
   },
-  computed: {
-    // lastSavedID() {
-    //   return this.$store.getters.getLastSavedCompetenceID
-    // },
-  },
-  watch: {
-    // lastSavedID() {
-    //   db.kompetenzbeschreibungen
-    //     .where('id')
-    //     .equals(this.lastSavedID)
-    //     .toArray((result) => {
-    //       this.compLinks.unshift(result)
-    //     })
-    // },
-  },
-  created() {
-    // this.fillCompLinkList()
-    // eslint-disable-next-line nuxt/no-globals-in-created
-    // eslint-disable-next-line nuxt/no-globals-in-created
-
-  },
-  mounted() {},
-  methods: {
-    // fillCompLinkList() {
-    //   db.kompetenzbeschreibungen.toArray((comp) => {
-    //     comp.forEach((item) => {
-    //       const temp = {
-    //         nmbr: item.id,
-    //         title: item.name,
-    //         id: item.id,
-    //         final: item.final,
-    //       }
-    //       this.compLinks.unshift(temp)
-    //     })
-    //   })
-    // },
-    // setCurrCompID(id) {
-    //   this.$store.commit('setCurrCompetenceID', id)
-    // },
-  },
 }
 </script>
 <style>
@@ -144,20 +83,16 @@ html {
   min-width: 850px !important;
   overflow-y: auto;
 }
-/* width */
 ::-webkit-scrollbar {
   width: 10px;
   height: 10px;
 }
-/* Track */
 ::-webkit-scrollbar-track {
   background: rgba(158, 158, 158, 0.3);
 }
-/* Handle */
 ::-webkit-scrollbar-thumb {
   background: rgba(158, 158, 158, 0.6);
 }
-/* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
   background: rgba(158, 158, 158, 1);
 }

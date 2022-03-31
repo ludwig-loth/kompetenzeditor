@@ -14,9 +14,7 @@
               color="white"
               style="font-size: 1.6em; border-radius: 0px; width: 38vw"
             ></v-text-field>
-            <!-- <v-btn tile color="success" class="mr-1" @click="text = testtext">
-              test-text
-            </v-btn> -->
+
             <v-spacer></v-spacer>
             <v-btn
               outlined
@@ -27,15 +25,7 @@
               <v-icon>mdi-content-save</v-icon>
               speichern
             </v-btn>
-            <!-- <v-btn
-              color="primary"
-              class="mr-1"
-              outlined
-              tile
-              @click="text = ''"
-            >
-              <v-icon>mdi-delete-sweep</v-icon> leeren</v-btn
-            > -->
+
             <v-btn
               depressed
               color="primary"
@@ -48,17 +38,6 @@
             </v-btn>
           </v-toolbar>
           <v-card-text class="pa-1" height="calc(70vh - 184px)">
-            <!-- <highlightable-input
-              id="textBox"
-              v-model="text"
-              highlight-style="background-color:lightgreen; padding:4px"
-              :highlight-enabled="highlightEnabled"
-              :highlight="highlight"
-              :placeholder="textareaPlaceholder"
-              caseSensitive
-              @input="nlp(text)"
-            /> -->
-
             <Editable
               id="textBox"
               v-model="text"
@@ -67,18 +46,6 @@
               :highlights="highlight"
               @input="processHighlighted"
             />
-            <!-- 
-            <Editable
-              v-model="text"
-              :delay="typingDelay"
-              :htmlText="highlightedText"
-              :highlights="highlight"
-              @input="nlp(text)"
-            /> -->
-            <!-- <div
-              id="fakeOutput"
-              v-html="foobarTXT"
-            ></div> -->
           </v-card-text>
         </v-card>
       </v-sheet>
@@ -88,15 +55,6 @@
             <v-toolbar flat dense tile>
               <v-toolbar-title>Bewertung</v-toolbar-title>
               <v-spacer></v-spacer>
-              <!-- <v-btn
-                outlined
-                color="primary"
-                class="mr-1"
-                @click="foobar('some btn')"
-              >
-                <v-icon>mdi-content-copy</v-icon>
-                some btn
-              </v-btn> -->
               <v-btn
                 depressed
                 color="primary"
@@ -110,8 +68,7 @@
             </v-toolbar>
             <v-card-text style="overflow-y: auto; min-height: 230px">
               <v-row>
-                <!-- <v-col cols="12"> -->
-                <v-col cols="6" class="d-flex justify-center">
+                <v-col cols="4" class="d-flex justify-center">
                   <v-progress-circular
                     :rotate="270"
                     :size="200"
@@ -122,89 +79,213 @@
                     {{ score }} %
                   </v-progress-circular>
                 </v-col>
-                <v-col cols="6">
-                  <v-chip class="ma-2" color="blue-grey lighten-4">
-                    Sätze
-                    <v-avatar right class="blue-grey lighten-3">
-                      {{ nlpSentences.length }}
-                    </v-avatar>
-                  </v-chip>
-                  <v-chip class="ma-2" color="blue-grey lighten-4">
-                    überflüßige Sätze
-                    <v-avatar right style="background-color: yellow">
-                      {{ noVerbsSents.length }}
-                    </v-avatar>
-                  </v-chip>
-                  <v-chip class="ma-2" color="blue-grey lighten-4">
-                    Verben
-                    <v-avatar right style="background-color: lightgreen">
-                      {{ goodVerbsCount }}
-                    </v-avatar>
-                  </v-chip>
-                  <v-chip class="ma-2" color="blue-grey lighten-4">
-                    ungeeigente Verben
-                    <v-avatar right style="background-color: lightcoral">
-                      {{ badVerbsCount }}
-                    </v-avatar>
-                  </v-chip>
+                <v-col cols="8">
+                  <v-list>
+                    <v-divider></v-divider>
+                    <v-list-item>
+                      <v-list-item-content>
+                        <v-chip
+                          color="blue-grey lighten-4"
+                          style="max-width: max-content"
+                        >
+                          Sätze insgesamt
+                          <v-avatar right class="blue-grey lighten-3">
+                            {{ nlpSentences.length }}
+                          </v-avatar>
+                        </v-chip>
+                      </v-list-item-content>
+                      <v-list-item-action class="my-0">
+                        <v-menu
+                          :close-on-content-click="false"
+                          :nudge-width="100"
+                          offset-x
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn icon v-bind="attrs" v-on="on">
+                              <v-icon color="grey lighten-1"
+                                >mdi-information</v-icon
+                              >
+                            </v-btn>
+                          </template>
+                          <v-card width="350">
+                            <v-card-text>
+                              <p>
+                                Der gesamte Text enthält
+                                {{ nlpSentences.length }} Sätze.
+                              </p>
+                              <p>
+                                Auf Basis der Gesamtanzahl wird die Wertung
+                                errechnet. Jeder Satz kann eine positive oder
+                                negative Bewertung bekommen und diese wird auf
+                                den gesamt Wert (links zu finden) angerechnet.
+                              </p>
+                            </v-card-text>
+                          </v-card>
+                        </v-menu>
+                      </v-list-item-action>
+                    </v-list-item>
+                    <v-divider></v-divider>
+                    <v-list-item>
+                      <v-list-item-content>
+                        <v-chip
+                          color="blue-grey lighten-4"
+                          style="max-width: max-content"
+                        >
+                          entbehrliche Sätze
+                          <v-avatar right style="background-color: yellow">
+                            {{ noVerbsSents.length }}
+                          </v-avatar>
+                        </v-chip>
+                      </v-list-item-content>
+                      <v-list-item-action class="my-0">
+                        <v-menu
+                          :close-on-content-click="false"
+                          :nudge-width="100"
+                          offset-x
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn icon v-bind="attrs" v-on="on">
+                              <v-icon color="grey lighten-1"
+                                >mdi-information</v-icon
+                              >
+                            </v-btn>
+                          </template>
+                          <v-card width="350">
+                            <v-card-text>
+                              <p>
+                                Es wurden {{ noVerbsSents.length }} entbehrliche
+                                Sätze erkannt.
+                              </p>
+                              <p>
+                                Das wirkt sich negativ auf die Bewertung aus und
+                                veringert diese um
+                                <v-chip pill>{{ noVerbsSentsScore }}%</v-chip>
+                              </p>
+                              <p>
+                                Ein entbehrlicher Satz, ist ein Satz, der weder
+                                ein empfohlenes noch ein nicht empfohlenes Verb
+                                enthält.
+                              </p>
+                            </v-card-text>
+                          </v-card>
+                        </v-menu>
+                      </v-list-item-action>
+                    </v-list-item>
+                    <v-divider></v-divider>
+                    <v-list-item>
+                      <v-list-item-content>
+                        <v-chip
+                          color="blue-grey lighten-4"
+                          style="max-width: max-content"
+                        >
+                          empfohlene Verben
+                          <v-avatar right style="background-color: lightgreen">
+                            {{ goodVerbsCount }}
+                          </v-avatar>
+                        </v-chip>
+                      </v-list-item-content>
+                      <v-list-item-action class="my-0">
+                        <v-menu
+                          :close-on-content-click="false"
+                          :nudge-width="100"
+                          offset-x
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn icon v-bind="attrs" v-on="on">
+                              <v-icon color="grey lighten-1"
+                                >mdi-information</v-icon
+                              >
+                            </v-btn>
+                          </template>
+                          <v-card width="350">
+                            <v-card-text>
+                              <p>
+                                Es wurden {{ goodVerbsCount }} empfohlene Verben
+                                erkannt:
+                              </p>
+                              <p>
+                                <v-simple-table
+                                  fixed-header
+                                  height="175px"
+                                  dense
+                                >
+                                  <template v-slot:default>
+                                    <tbody>
+                                      <tr
+                                        v-for="(
+                                          item, index
+                                        ) in allTextGoodVerbs"
+                                        :key="index"
+                                      >
+                                        <td>{{ item }}</td>
+                                      </tr>
+                                    </tbody>
+                                  </template>
+                                </v-simple-table>
+                              </p>
+                              <p>
+                                Ein Satz wird als positiv bewertet sobald dieser
+                                ein empfohlenes Verb enthält. Nicht empfohlene
+                                Verben überschreiben die positive Bewertung und
+                                der Satz wird negativ bewertet.
+                              </p>
+                            </v-card-text>
+                          </v-card>
+                        </v-menu>
+                      </v-list-item-action>
+                    </v-list-item>
+                    <v-divider></v-divider>
+                    <v-list-item>
+                      <v-list-item-content>
+                        <v-chip
+                          color="blue-grey lighten-4"
+                          style="max-width: max-content"
+                        >
+                          nicht empfholene Verben
+                          <v-avatar right style="background-color: lightcoral">
+                            {{ badVerbsCount }}
+                          </v-avatar>
+                        </v-chip>
+                      </v-list-item-content>
+                      <v-list-item-action class="my-0">
+                        <v-menu
+                          :close-on-content-click="false"
+                          :nudge-width="100"
+                          offset-x
+                        >
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-btn icon v-bind="attrs" v-on="on">
+                              <v-icon color="grey lighten-1"
+                                >mdi-information</v-icon
+                              >
+                            </v-btn>
+                          </template>
+                          <v-card width="350">
+                            <v-card-text>
+                              <p>
+                                Es wurden {{ badVerbsCount }} nicht empfohlene
+                                Verben erkannt.
+                              </p>
+                              <p>
+                                Das wirkt sich negativ auf die Bewertung aus und
+                                veringert diese um
+                                <v-chip pill>{{ badSentsScore }}%</v-chip>
+                              </p>
+                              <p>
+                                Ein Satz wird als negativ bewertet dobald dieser
+                                ein nicht empfohlenes Verb enthält. Ein
+                                empfohlenes Verb in dem Satz hebt die negative
+                                Wertung des Satzes nicht wieder auf.
+                              </p>
+                            </v-card-text>
+                          </v-card>
+                        </v-menu>
+                      </v-list-item-action>
+                    </v-list-item>
+                    <v-divider></v-divider>
+                  </v-list>
                 </v-col>
-                <!-- </v-col> -->
               </v-row>
-              <!-- <v-row> -->
-              <!-- <v-col cols="3" class="d-flex justify-center">
-                  <v-progress-circular
-                    :rotate="270"
-                    :size="120"
-                    :width="15"
-                    :value="score"
-                    color="blue-grey"
-                  >
-                    {{ score }} %
-                  </v-progress-circular>
-                </v-col> -->
-              <!-- <v-col cols="3">
-                  <v-card tile outlined class="thickBorderCard" height="120px">
-                    <v-card-title class="text-h6">Spezifizierung</v-card-title>
-                    <v-card-subtitle>
-                      <v-progress-linear
-                        :value="spezVal"
-                        color="blue-grey"
-                        height="15"
-                      ></v-progress-linear>
-                    </v-card-subtitle>
-                  </v-card>
-                </v-col>
-                <v-col cols="3">
-                  <v-card tile outlined class="thickBorderCard" height="120px">
-                    <v-card-title class="text-h6"
-                      >Performanz
-                      <v-spacer></v-spacer>
-                      <v-avatar v-if="perfVal === 100" size="25" color="green">
-                        <v-icon>mdi-check</v-icon>
-                      </v-avatar>
-                    </v-card-title>
-                    <v-card-subtitle>
-                      <v-progress-linear
-                        :value="perfVal"
-                        color="blue-grey"
-                        height="15"
-                      ></v-progress-linear
-                    ></v-card-subtitle>
-                  </v-card>
-                </v-col>
-                <v-col cols="3">
-                  <v-card tile outlined class="thickBorderCard" height="120px">
-                    <v-card-title class="text-h6">Domäne</v-card-title>
-                    <v-card-subtitle>
-                      <v-progress-linear
-                        :value="domVal"
-                        color="blue-grey"
-                        height="15"
-                      ></v-progress-linear
-                    ></v-card-subtitle>
-                  </v-card>
-                </v-col> -->
-              <!-- </v-row> -->
             </v-card-text>
           </v-card>
         </v-sheet>
@@ -218,7 +299,6 @@
           height="calc(100vh - 100px)"
           style="margin-top: -2px"
         >
-          <!-- <v-card min-height="calc(80vh - 126px)" outlined> -->
           <v-toolbar flat dense tile>
             <v-toolbar-title>Vorschläge</v-toolbar-title>
             <v-spacer></v-spacer>
@@ -241,13 +321,11 @@
               accordion
               multiple
               class="mb-5"
-              
             >
               <v-expansion-panel
                 v-for="(item, i) in allTextBadVerbs"
                 :key="i"
                 elevation="20"
-                @click="refSuggentions(item)"
               >
                 <v-expansion-panel-header>
                   <v-row>
@@ -259,11 +337,6 @@
                         >{{ item }}
                       </v-chip>
                     </v-col>
-                    <!-- <v-col cols="3">
-                      <v-avatar right size="32" color="blue-grey lighten-4">
-                        {{ i + 1 }}
-                      </v-avatar>
-                    </v-col> -->
                   </v-row>
                 </v-expansion-panel-header>
                 <v-expansion-panel-content>
@@ -299,7 +372,7 @@
                               <template v-slot:default>
                                 <thead>
                                   <tr>
-                                    <th class="text-left">Stufe</th>
+                                    <th class="text-left">Taxonomiestufe</th>
                                     <th class="text-left">Verb</th>
                                   </tr>
                                 </thead>
@@ -318,10 +391,6 @@
                         </v-expansion-panel>
                       </v-expansion-panels>
                     </v-card-text>
-                    <!-- <v-card-actions>
-                      <v-btn tile depressed color="error" @click="">ignorieren</v-btn>
-                      <v-spacer></v-spacer>
-                    </v-card-actions> -->
                   </v-card>
                 </v-expansion-panel-content>
               </v-expansion-panel>
@@ -334,11 +403,7 @@
               multiple
               class="mb-5"
             >
-              <v-expansion-panel
-                v-for="(item, i) in modalVerbsOC"
-                :key="i"
-                @click="refSuggentions(item)"
-              >
+              <v-expansion-panel v-for="(item, i) in modalVerbsOC" :key="i">
                 <v-expansion-panel-header>
                   <v-row>
                     <v-col cols="12">
@@ -357,8 +422,9 @@
                     <v-card-text class="px-2">
                       <ul>
                         <li>
-                          <b>"können"</b> ist ein Modalverb und bezieht sich in
-                          diesem Satz auf das Verb <b>"{{ item }}"</b>.
+                          <b>"können"</b> ist in diesem Fall ein Modalverb und
+                          bezieht sich in diesem Satz auf das Verb
+                          <b>"{{ item }}"</b>.
                         </li>
                         <li>
                           Das <b>"Können"</b> einer Person ist im Bezug auf
@@ -366,7 +432,26 @@
                         </li>
                         <li>
                           Versuchen Sie <b>"können"</b> zu vermeiden, indem Sie
-                          den Satz umstellen und kein Modalverb benutzen.
+                          den Satz umstellen und es nicht als Hilfsverb
+                          benutzen.
+                        </li>
+                        <li>
+                          Das Hilfsverb <b>"können"</b>, welches den
+                          Kompetenzaspekt anzeigt kann in den meisten Fällen
+                          problemlos weggelassen werden. Es ist also ohne
+                          weiteres möglich <b>"{{ item }}"</b> zu schreiben
+                          statt <b>"können ... {{ item }}"</b>.
+                        </li>
+                        <li>
+                          Gelegentlich führen Formulierungen ohne das Hilfsverb
+                          <b>"können"</b> zu Missverständnissen und stören
+                          Lesefluß oder verkomplizieren den Satzbau. In solchen
+                          Fällen ist es zulässig das HIlfsverb zu nutzen.
+                        </li>
+                        <li>
+                          Um etwaigen Missverständisse zu umgehen ist es
+                          ratssam, den Satz so umzustellen, dass dieser das
+                          HIlfsverb <b>"können"</b> nicht benötigt.
                         </li>
                       </ul>
                       <div class="ma-4">
@@ -398,13 +483,8 @@
               accordion
               multiple
               class="mb-5"
-              
             >
-              <v-expansion-panel
-                v-for="(item, i) in noVerbsSents"
-                :key="i"
-                @click="refSuggentions(item)"
-              >
+              <v-expansion-panel v-for="(item, i) in noVerbsSents" :key="i">
                 <v-expansion-panel-header>
                   <v-row>
                     <v-col cols="12">
@@ -450,7 +530,7 @@
                               <template v-slot:default>
                                 <thead>
                                   <tr>
-                                    <th class="text-left">Stufe</th>
+                                    <th class="text-left">Taxonomiestufe</th>
                                     <th class="text-left">Verb</th>
                                   </tr>
                                 </thead>
@@ -493,7 +573,6 @@
               accordion
               multiple
               class="mb-5"
-              
             >
               <v-expansion-panel>
                 <v-expansion-panel-header>
@@ -548,29 +627,13 @@
                               v-for="(item, index) in unsedVerbsNLP"
                               :key="index"
                             >
-                              <td @click="refSuggentions(item)">{{ item }}</td>
+                              <td>{{ item }}</td>
                             </tr>
                           </tbody>
                         </template>
                       </v-simple-table>
-                      <!-- <div class="ma-4">
-                        Hier finden Sie ein Beispiel, wie sich ein solcher Satz
-                        umstellen lässt:
-                      </div> -->
                     </v-card-text>
-                    <v-card-actions>
-                      <!-- <v-btn
-                        large
-                        block
-                        style="text-transform: unset"
-                        color="blue-grey lighten-5"
-                        @click="
-                          dialogBsp = true
-                          modalVerbInfo = true
-                        "
-                        >Beispiel</v-btn
-                      > -->
-                    </v-card-actions>
+                    <v-card-actions> </v-card-actions>
                   </v-card>
                 </v-expansion-panel-content>
               </v-expansion-panel>
@@ -652,12 +715,27 @@
         <v-card-text>
           <div v-if="suggentionsInfo">
             <p class="title pt-5">Vorschläge</p>
-            <p>In diesem Bereich werden Vorschläge und Informationen angezeigt. </p>
+            <p>
+              In diesem Bereich werden Vorschläge und Informationen angezeigt.
+            </p>
             <p>Diese beziehen sich auf den von Ihnen eingegebenen Text.</p>
-            <p>Mit Hilfe einer Natural Language Processing (NLP) Software wird der Text ausgewertet und analysiert.</p>
-            <p>Auf Basis dieser Analyse werden hier verschiedene dynamische Boxen angezeigt, die sich aufklappen lassen.</p>
-            <p>Diese Boxen enthalten Vorschläge und INformationen, sowie Erläutertungen über die Analyse des Textes.</p>
-            <p>Die Anzeige erfolgt annährend in Echtzeit. Sobald der Nutzer aufgehört hat zu tippen werden die Boxen eine Sekunde später aktualisiert.</p>
+            <p>
+              Mit Hilfe einer Natural Language Processing (NLP) Software wird
+              der Text ausgewertet und analysiert.
+            </p>
+            <p>
+              Auf Basis dieser Analyse werden hier verschiedene dynamische Boxen
+              angezeigt, die sich aufklappen lassen.
+            </p>
+            <p>
+              Diese Boxen enthalten Vorschläge und INformationen, sowie
+              Erläutertungen über die Analyse des Textes.
+            </p>
+            <p>
+              Die Anzeige erfolgt annährend in Echtzeit. Sobald der Nutzer
+              aufgehört hat zu tippen werden die Boxen eine Sekunde später
+              aktualisiert.
+            </p>
           </div>
           <div v-if="textareaInfo">
             <p class="title pt-5">Texteingabefeld</p>
@@ -666,36 +744,79 @@
               Hier können Sie einen Freitext mit der Tastatur eigeben oder einen
               bereits geschieben Text einfügen.
             </p>
-            <p>Mit Hilfe einer Natural Language Processing (NLP) Software wird der Text ausgewertet und analysiert. Sobald keine Eingabe mehr registriert wird aktualisiert sich exakt eine Sekunde später die Ansicht und die Wörter werden entsprechend ihrer Gewichtung hervorgehoben.</p>
-            <p>Auf dem <b>Speichern</b>-Button kann der aktuelle Text gespeichert werden und wird in der Übersicht angezeigt.</p>
-            <p>In dieser Beta-Version gibt es einige Einschränkungen:</p>
-            <ul>
-              <li>
-                Es kann zu Fehlern und unerwartetem Verhalten bei der Hervorhgebung der entsprechenden Wörter kommen.
-              </li>
-              <li>Es ist nicht empfohlen vorformatierten Text einzufügen, die kann zu unerwarteten und fehlerhaftem Verhalten führen.</li>
-            </ul>
+            <p>
+              Mit Hilfe einer Natural Language Processing (NLP) Software wird
+              der Text ausgewertet und analysiert. Sobald keine Eingabe mehr
+              registriert wird aktualisiert sich exakt eine Sekunde später die
+              Ansicht und die Wörter werden entsprechend ihrer Gewichtung
+              hervorgehoben.
+            </p>
+            <p>
+              Auf dem <b>Speichern</b>-Button kann der aktuelle Text gespeichert
+              werden und wird in der Übersicht angezeigt.
+            </p>
+            <div>
+              <b
+                ><v-chip label color="error" small
+                  ><v-icon small left>mdi-alert</v-icon>ACHTUNG</v-chip
+                >
+              </b>
+              <p>In dieser Beta-Version gibt es einige Einschränkungen:</p>
+              <ul>
+                <li>
+                  Es kann zu Fehlern und unerwartetem Verhalten bei der
+                  Hervorhgebung der entsprechenden Wörter kommen.
+                </li>
+                <li>
+                  Es ist nicht empfohlen vorformatierten Text einzufügen, die
+                  kann zu unerwarteten und fehlerhaftem Verhalten führen.
+                </li>
+              </ul>
+            </div>
+            <div class="mt-3">
+              Bekannte Fehler/Bugs:
+              <ul>
+                <li>
+                  Die "neutralen Verben" werden erst nach einer Eingabe
+                  hervorgehoben
+                </li>
+                <li>
+                  Es kann vorkommen, dass die Hervorhgebungen, der Wörter die an
+                  letzter Stelle im Trexyt stehen nicht richtig erkannt werden,
+                  nach erneuter Eingabe.
+                </li>
+                <li>
+                  Die Hervorhgebung von Wörter mit ähnlichen Wortstamm, die
+                  jeweils in anderen Kategorien eingeordnet sind, wie "erkennen"
+                  und "kennen", kann zu fehlerhaften Hervorhebungen führen. Dies
+                  ist rein optisch und die Bewertung wird trotzdessen korrekt
+                  ausgeführt.
+                </li>
+              </ul>
+            </div>
           </div>
           <div v-if="scoreInfo">
             <p class="title pt-5">Bewertung</p>
-            <v-row>
-              <v-col cols="12"
-                >Alle Sätze ergeben zu gleichen Teilen die Gesamtbewertung. Bsp:
-                4 Sätze sind 100%, also ist jeder Satz 25% "wertvoll"</v-col
-              >
-              <v-col cols="6">goodSentScore: {{ goodSentScore }} </v-col>
-              <v-col cols="6"> Es gibt keine Punkte für gute Verben </v-col>
-              <v-col cols="6">badSentScore: {{ badSentScore }}</v-col>
-              <v-col cols="6">
-                Für jeden Satz, der ein schlechtes Verb enthält wird dieser
-                prozentual abgezogen.</v-col
-              >
-              <v-col cols="6">noVerbsSents: {{ noVerbsSents.length }}</v-col>
-              <v-col cols="6">
-                Sätze ohne Verben beeinflußen die Bewertung und werden
-                prozentual abgezogen.</v-col
-              >
-            </v-row>
+            <p>Alle Sätze ergeben zu gleichen Teilen die Gesamtbewertung</p>
+            <p>
+              Das bedeutedet, dass die Gesamtanzahl der Sätze 100% entspricht.
+            </p>
+            <p>
+              Anteilig von diesen 100% werden die negativen Sätze, welche
+              <b>nicht empfohlene Verben</b> abgezogen.
+            </p>
+            <p>
+              Ähnlich wird mit den <b>entbehrlichen Sätzen</b> verfahren, mit
+              dem Unterschied, dass diese Sätze jeweils nur zu 75% anteilg die
+              Bewertung negativ beeinflussen.
+            </p>
+            <p>
+              Mit dieser Formel wird die Bewertung ausgerechnet:
+              <v-img
+                src="img/forumla.png"
+                max-width="950"
+              ></v-img>
+            </p>
           </div>
         </v-card-text>
         <v-divider></v-divider>
@@ -704,7 +825,9 @@
     </v-dialog>
     <v-dialog v-model="dialogAction" width="500" persistent>
       <v-card tile>
-        <v-card-title class="text-h5 grey lighten-2"> Text speichern </v-card-title>
+        <v-card-title class="text-h5 grey lighten-2">
+          Kompetenzbeschreibung speichern
+        </v-card-title>
         <v-card-text class="mt-4">
           <v-row>
             <v-col cols="12" sm="12">
@@ -735,13 +858,9 @@
 </template>
 <script>
 import { db } from '../plugins/db'
-// import levenshtein from '../plugins/levenshtein'
 
 export default {
   data: () => ({
-    // isEditable: true,
-    // message: 'Hallo, das ist ein Text.',
-
     highlightEnabled: true,
     textareaPlaceholder:
       'Schreiben Sie hier Ihre kompetenzbeschreibungen, fügen Sie einen Text mit STRG+V ein oder wählen Sie aus der rechten Leiste eine bestehende Beschreibung aus...',
@@ -749,7 +868,6 @@ export default {
     highlightedText: '',
     typingDelay: 1000,
     timer: null,
-    // selectedText: '',
     nlpSentencesLength: 0,
     nlpSentences: [],
     nlpVerbs: [],
@@ -761,11 +879,14 @@ export default {
     badVerbsColor: '',
     uniqueBadVerbs: [],
     allTextBadVerbs: [],
+    allTextGoodVerbs: [],
     goodVerben: [],
     goodVerbenTaxo: [],
     goodVerbsColor: '',
     uniqueGoodVerbs: [],
     noVerbsSents: [],
+    noVerbsSentsScore: 0,
+    badSentsScore: 0,
     unusedSents: [],
     unusedSentsRule: false,
     suggPanelsUnusedSents: [],
@@ -808,53 +929,11 @@ export default {
     editableShow: true,
     fakeOutput: false,
   }),
-  watch: {
-    // compID() {
-    //   db.kompetenzbeschreibungen
-    //     .where('id')
-    //     .equals(this.compID)
-    //     .toArray((result) => {
-    //       this.text = result[0].text
-    //     })
-    // },
-    text() {
-      // kleiner Workaround um die Verben zu zählen
-      // da diese eine spezielle Farbe haben im Conteneditable werden sie darüber gesucht und in einer Nodelist abgelegt.
-      // NodeList.length
-
-      setTimeout(() => {
-        // const texBox = document.querySelector('#textBox')
-        // const goodVerbsCount = texBox.querySelectorAll(
-        //   'span[style^="background-color:lightgreen;"]'
-        // )
-        // const badVerbsCount = texBox.querySelectorAll(
-        //   'span[style^="background-color:lightcoral;"]'
-        // )
-        // const einleitungenCount = texBox.querySelectorAll(
-        //   'span[style^="background-color:yellow;"]'
-        // )
-        // this.score = 0
-        // this.perfVal = 0
-        // this.goodVerbsCount = goodVerbsCount.length
-        // this.badVerbsCount = badVerbsCount.length
-        // this.einleitungenCount = einleitungenCount.length
-        // this.checkEinleitung()
-        // this.checkVerben()
-        // this.showSuggestions()
-        // this.highlight.push({
-        //   text: item,
-        //   style: 'background-color:yellow; padding:1px',
-        //   caseSensitive: true,
-        // })
-      }, 500)
-    },
-  },
   created() {
     this.badVerbsColor = 'lightcoral'
     this.goodVerbsColor = 'lightgreen'
   },
   mounted() {
-    // console.log(levenshtein.getDistance('auf', 'aufda'))
     this.compID = this.$store.getters.getCurrCompetenceID
     this.setCompetence()
     if (this.compName === null) {
@@ -888,13 +967,10 @@ export default {
           .equals(this.compID)
           .toArray((result) => {
             this.text = result[0].text
-
             this.compName = result[0].name
             return result[0].text
           })
           .then((text) => {
-            // console.log(text)
-
             this.processHighlighted(text)
           })
           .catch((err) => {
@@ -907,31 +983,7 @@ export default {
       const txt2 = txt.replace(/(<([^>]+)>)/gi, '')
       // remove special chars that provenly cause errors
       const valTxt = txt2.replace(/([/])/g, ' ')
-      // console.log(temp.replace(/([`@#$%^&*()_+\-=[\]{};':"\\|<>/~])/g, ' '))
-      // clearTimeout(this.timer)
-      // this.timer = setTimeout(
-      //   () => {
 
-      // console.log(this.localValue)
-      // this.highlightText(e.target.innerText)
-
-      // eslint-disable-next-line no-unused-vars
-      const getSents = async () => {
-        try {
-          this.nlpSentencesLength = 0
-          const res = await this.$axios.post('/api/sents', {
-            text: valTxt,
-            model: 'de_core_news_sm',
-          })
-          this.nlpSentencesLength = res.data.length
-          this.nlpSentences = res.data
-        } catch (err) {
-          // Handle Error Here
-          console.error(err)
-          console.error(err.request)
-          console.error(err.message)
-        }
-      }
       const getDep = async () => {
         try {
           this.nlpVerbs = []
@@ -979,13 +1031,7 @@ export default {
         this.suggPanelsModal = this.modalVerbsOC
         this.checkVerben()
         this.computeScore()
-        // setTimeout(() => {
         this.showSuggestions()
-
-        // this.setCompetence()
-
-        // this.unusedSents(this.noVerbsSents)
-        // }, 500)
       }
       const getSentsDep = async () => {
         try {
@@ -995,7 +1041,6 @@ export default {
             text: valTxt,
             model: 'de_core_news_sm',
           })
-          // console.log(res.data.arcs);
 
           res.data.forEach((el) => {
             if (!/^\s*$/.test(el.sentence)) {
@@ -1005,9 +1050,6 @@ export default {
               this.nlpSentences.push(el.sentence)
             }
           })
-          console.log(this.nlpSentences)
-
-          // console.log(this.noVerbsSents)
           this.nlpSentencesLength = this.nlpSentences.length
         } catch (err) {
           // Handle Error Here
@@ -1018,33 +1060,13 @@ export default {
       }
       getSentsDep()
       getDep()
-      //   },
-      //   this.typingDelay,
-      //   valTxt
-      // )
-      // getSents()
-      //   .then(() => {
-      //     getSentsDep()
-      //   })
-      //   .then(() => {
-      //     getDep()
-      //   })
-      //   .then(() => {})
-      //   .catch((err) => {
-      //     console.error(err)
-      //   })
-      // this.processHighlighted(this.text)
     },
     processHighlighted(val) {
-      // console.log(this.unsedVerbsNLP)
       this.nlp(this.text)
-      console.log(this.unsedVerbsNLP)
-
       let tempTxt = val
-      // console.log(this.highlight)
       this.highlight.forEach((el) => {
         // ##########################################
-        // could be usefull for unused sentence to hoghlight
+        // could be usefull for unused sentence to highlight
         // if (typeof el.sentence !== 'undefined') {
         //   const strRegExPatternSent = el.sentence
         //   const matchesSent = tempTxt.matchAll(
@@ -1062,56 +1084,22 @@ export default {
         const strRegExPattern = '\\b' + el.text + '\\b'
         const matches = tempTxt.matchAll(new RegExp(strRegExPattern, 'g'))
 
-        // const regex = `/\\b${el.text}\\b/g`
-        // const matches = tempTxt.matchAll(regex)
-
         for (const m of matches) {
-          // console.log(`${m} at ${m.index}`)
-
-          // let highlightedText = ''
-
-          // highlightedText = tempTxt
-          //   .split(m)
-          //   .join('<mark style="' + el.style + '">' + el.text + '</mark>')
           tempTxt = tempTxt.replaceAll(
             m,
             '<mark style="' + el.style + '">' + m + '</mark>'
           )
-          // tempTxt = highlightedText
-          // console.log(highlightedText);
         }
-
-        // if (tempTxt.includes(el.text)) {
-        //   const index = tempTxt.indexOf(el.text)
-        //   let highlightedText = ''
-        //   if (index >= 0) {
-        //     highlightedText = tempTxt
-        //       .split(el.text)
-        //       .join('<mark style="' + el.style + '">' + el.text + '</mark>')
-        //     tempTxt = highlightedText
-        //   }
-        // }
       })
       this.highlightedText = tempTxt
-    },
-    checkEinleitung() {
-      // const words = this.einleitungenWords
-      // const text = this.nlpSentences[0].toLowerCase()
-      // for (let i = 0; i < words.length; i++) {
-      //   if (text.includes(words[i])) {
-      //     this.score = this.score + 10
-      //   }
-      // }
-      // console.log(text)
-      // console.log(words)
     },
     checkVerben() {
       this.uniqueGoodVerbs = [...new Set(this.goodVerben)]
       this.goodVerbsCount = 0
       const uniqueGoodSents = []
       this.goodSentScore = 0
+      this.allTextGoodVerbs = []
       this.unsedVerbsNLP = [...new Set(this.nlpVerbs)]
-      // this.noVerbsSents = this.nlpSentences
 
       this.nlpVerbs.forEach((nv) => {
         this.uniqueGoodVerbs.forEach((gv) => {
@@ -1121,10 +1109,9 @@ export default {
                 this.unsedVerbsNLP.splice(i, 1)
               }
             })
-            console.log('good verb found: ' + gv)
             this.goodVerbsCount++
+            this.allTextGoodVerbs.push(gv)
             this.nlpSentences.forEach((se) => {
-              console.log(se)
               if (se.includes(gv) && !uniqueGoodSents.includes(se)) {
                 uniqueGoodSents.push(se)
                 this.goodSentScore += 1
@@ -1151,7 +1138,6 @@ export default {
                 this.unsedVerbsNLP.splice(i, 1)
               }
             })
-            console.log('bad verb found: ' + bv)
             this.badVerbsCount++
             this.allTextBadVerbs.push(bv)
             this.nlpSentences.forEach((se) => {
@@ -1171,19 +1157,8 @@ export default {
       })
       this.allTextBadVerbs = [...new Set(this.allTextBadVerbs)]
       this.fillHighlight()
-
-      // this.nlpVerbs.forEach((nv) => {
-      //   this.unsedVerbsNLP.forEach((item) => {
-      //     this.highlight.push({
-      //       text: item,
-      //       style: 'color:LightGrey; background-color:LightGrey',
-      //     })
-      //   })
-      // })
-
-      console.log(this.unsedVerbsNLP)
       // ##########################################
-      // could be usefull for unused sentence to hoghlight
+      // could be usefull for unused sentence to highlight
       // this.noVerbsSents.forEach((item) => {
       //   this.highlight.push({
       //     sentence: item,
@@ -1203,7 +1178,6 @@ export default {
     fillHighlight() {
       this.highlight = []
       // entsprechende Einträge aus Tabelle holen und in Array pushen
-
       db.schlechteVerben
         .toArray((verbenArr) => {
           verbenArr.forEach((item) => {
@@ -1252,59 +1226,8 @@ export default {
         .catch((err) => {
           console.error(err)
         })
-
-      // .then(
-      //   db.einleitungen.toArray((einleitungen) => {
-      //     einleitungen.forEach((item) => {
-      //       this.einleitungenWords.push(item.person)
-      //       this.einleitungenWords.push(item.adjektiv)
-      //       this.einleitungenWords.push(item.teilnahme)
-      //       this.highlight.push({
-      //         text: item.person,
-      //         style: 'background-color:yellow; padding:3px 0px 3px 3px',
-      //         caseSensitive: false,
-      //       })
-      //       this.highlight.push({
-      //         text: item.adjektiv,
-      //         style: 'background-color:yellow; padding:3px 0px 3px 3px',
-      //         caseSensitive: false,
-      //       })
-      //       this.highlight.push({
-      //         text: item.teilnahme,
-      //         style: 'background-color:yellow; padding:3px 0px 3px 3px',
-      //         caseSensitive: false,
-      //       })
-      //     })
-      //   })
-      // )
-    },
-    refSuggentions(val) {
-      // console.log(val)
-      // console.log(this.suggPanels)
-      const editableHtml = document.getElementById('textBox').innerText
-      // console.log(editableHtml)
-      if (editableHtml.includes(val)) {
-        // console.log(editableHtml.indexOf(val))
-      }
-
-      // const findDuplicateWords = (editableHtml) => {
-      //   const strArr = editableHtml.split(' ')
-      //   const res = []
-      //   for (let i = 0; i < strArr.length; i++) {
-      //     if (strArr.indexOf(strArr[i])) {
-      //       // if (!res.includes(strArr[i])) {
-      //       //   res.push(strArr[i])
-      //       // }
-      //       console.log(strArr[i])
-      //     }
-      //   }
-      //   return res.join(' ')
-      // }
-      // console.log(findDuplicateWords(editableHtml))
     },
     showSuggestions() {
-      // console.log('suggestions')
-      // console.log(this.suggPanelsModal)
       if (this.badVerbsCount > 0) {
         this.suggPanels = [0]
         this.badVerbRule = true
@@ -1334,19 +1257,15 @@ export default {
     computeScore() {
       const divider = 100 / this.nlpSentencesLength
       const badSents = divider * this.badSentScore
-      // const goodSents = divider * this.goodSentScore
+      this.badSentsScore = badSents
       const noSents = divider * this.noVerbsSents.length
-      const final = 100 + (-noSents - badSents)
-      // final = bad +goodSents
+      this.noVerbsSentsScore = noSents * 0.75
+      const final = 100 + (-(noSents * 0.75) - badSents)
 
-      this.score = Math.round((final + Number.EPSILON) * 100) / 100
+      this.score = (Math.round((final + Number.EPSILON) * 100) / 100).toFixed(2)
+      this.badSentsScore = Number(this.badSentsScore).toFixed(2)
+      this.noVerbsSentsScore = Number(this.noVerbsSentsScore).toFixed(2)
 
-      // console.log(divider)
-      // console.log(badSents)
-      // console.log(goodSents)
-      // console.log(noSents)
-      // console.log(final)
-      // console.log(this.score)
       if (this.score > 100) {
         this.score = 100
       } else if (this.score < 0) {
@@ -1355,33 +1274,23 @@ export default {
         this.score = 0
       }
     },
-
-    // sperateHighlight() {
-    //   this.highlight.forEach((el) => {
-    //     // console.log(el.text)
-    //     if (this.text.includes(el.text)) {
-    //       console.log(el.text)
-    //       const index = this.text.indexOf(el.text)
-    //       if (index >= 0) {
-    //         const highlightedText = this.text
-    //           .split(el.text)
-    //           .join('<span style="' + el.style + '">' + el.text + '</span>')
-    //         this.text = highlightedText
-    //         console.log(highlightedText)
-    //       }
-    //     }
-    //   })
-    //   console.log(this.highlight)
-    // },
     saveComp() {
       this.dialogAction = false
+      const today = new Date()
+      const date =
+        today.getDate() +
+        '.' +
+        (today.getMonth() + 1) +
+        '.' +
+        today.getFullYear()
       db.kompetenzbeschreibungen
         .add({
           name: this.compName,
           text: this.text,
           saetze: this.nlpSentences.length,
           wertung: this.score,
-          final: this.statusFinal,
+          datum: date,
+          datumUnix: Math.floor(today.getTime() / 1000),
         })
         .then((resID) => {
           this.$store.commit('setLastSavedCompetenceID', resID)
@@ -1408,7 +1317,7 @@ export default {
   content: attr(placeholder);
   pointer-events: none;
   color: grey;
-  display: block; /* For Firefox */
+  display: block;
 }
 .thickBorderCard {
   border-width: 2px !important;
@@ -1418,5 +1327,8 @@ export default {
   .v-expansion-panel-content
   >>> .v-expansion-panel-content__wrap {
   padding: 0px !important;
+}
+.v-list-item__content {
+  padding: 0% !important;
 }
 </style>

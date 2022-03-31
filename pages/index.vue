@@ -9,11 +9,7 @@
             ></v-card-text
           >
           <v-card-actions
-            ><v-btn
-              color="success"
-              block
-              depressed
-              @click="setCurrCompID(0)"
+            ><v-btn color="success" block depressed @click="setCurrCompID(0)"
               >neu hinzufügen</v-btn
             ></v-card-actions
           >
@@ -29,19 +25,42 @@
         xl="2"
       >
         <v-card height="200" outlined elevation="1">
-          <v-card-title>
-            <span class="d-inline-block text-truncate">
-              {{ item.title }}
-            </span>
-          </v-card-title>
-          <v-card-text style="height: 84px">
-            <v-chip>
-              ID:
+          <v-tooltip top>
+            <template v-slot:activator="{ on, attrs }">
+              <v-card-title class="pb-0">
+                <span
+                  class="d-inline-block text-truncate"
+                  v-bind="attrs"
+                  v-on="on"
+                >
+                  {{ item.title }}
+                </span>
+              </v-card-title>
+            </template>
+            <span>{{ item.title }}</span>
+          </v-tooltip>
+          <v-card-subtitle class="pt-0">
+            <v-chip outlined small>
+              <v-icon left small> mdi-calendar-clock </v-icon>
+              {{ item.date }}
+            </v-chip>
+            <v-chip outlined small>
+              <v-icon left> mdi-identifier </v-icon>
               {{ item.nmbr }}
             </v-chip>
-            <v-chip>
-              final:
-              {{ item.final }}
+          </v-card-subtitle>
+          <v-card-text style="height: 60px">
+            <v-chip class="mb-1" color="blue-grey lighten-4" pill>
+              Sätze
+              <v-avatar right class="blue-grey lighten-3">
+                {{ item.sentences }}
+              </v-avatar>
+            </v-chip>
+            <v-chip class="mb-1" color="blue-grey lighten-4" pill>
+              Wertung
+              <v-avatar right class="blue-grey lighten-3">
+                {{ item.score }}
+              </v-avatar>
             </v-chip>
           </v-card-text>
           <v-card-actions>
@@ -84,7 +103,9 @@ export default {
             nmbr: item.id,
             title: item.name,
             id: item.id,
-            final: item.final,
+            date: item.datum,
+            sentences: item.saetze,
+            score: Number(item.wertung).toFixed(1),
           }
           this.compLinks.unshift(temp)
         })

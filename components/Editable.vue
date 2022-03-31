@@ -1,18 +1,4 @@
 <template>
-  <!-- <div id="contentEditable">
-    <div id="fakeOutput" v-html="htmlText"></div>
-    <v-textarea
-      outlined
-      id="contentEditableBox"
-      @input="update"
-      @focus="focus"
-      @blur="blur"
-      @keyup="$emit('keyup')"
-      @keydown="$emit('keydown')"
-      label="Outlined textarea"
-      :value="valueText"
-    ></v-textarea>
-  </div> -->
   <div id="contentEditable">
     <div id="fakeOutput" v-html="htmlText"></div>
     <div
@@ -62,20 +48,15 @@ export default {
   computed: {
     localValue: {
       get() {
-        // console.log('localValue get')
         return this.value
-        // return this.htmlText
       },
       set(newValue) {
-        // console.log('localValue set')
-        // this.$emit('update:value', newValue)
         this.$emit('input', newValue)
       },
     },
   },
   watch: {
     localValue(newVal) {
-      // console.log('localValue watch')
       if (!this.focusIn) {
         this.valueText = newVal
       }
@@ -83,7 +64,6 @@ export default {
   },
   created() {
     this.valueText = this.value
-    // this.valueText = this.htmlText
   },
   mounted() {},
   methods: {
