@@ -1,9 +1,9 @@
-## Disclaimer
+# Kompetenzeditor
 This is an early version of my so-called "Kompetenzeditor" (competence editor). It was developed by me as part of a student project during a semester at Fulda University of Applied Sciences.
 This software is still at an early stage. I therefore advise against using it in production environments. Currently, I can't work on this project, so don't expect, much development from me here  in the near future.
 Overall, it is assumed that the authors have a basic understanding of the formulation and definition of learning objectives and competences.
+> The software is currently only available in German and does not support any other language. Therefore, the following information will also be partly written in German.
 
-# Kompetenzeditor
 ## What is this exactly?
 This is a competence editor. This software supports users in formulating competence descriptions in free text and inserting existing texts in order to check their suitability. The texts are analyzed according to certain criteria and, based on this, passive assistance is offered that the user can implement. A score is also calculated, which shows the user how ‘good’ or how close the text comes to an ‘ideal’ description of competences according to scientific criteria.
 
@@ -17,7 +17,8 @@ DELFI: Workshop. Karlsruhe. 12.-14. September 2022
 DOI: 10.18420/delfi2022-ws-32
 ```
 
-> The software is currently only available in German and does not support any other language. Therefore, the following information will also be partly written in German.
+![Screenshot of a the Software in action](https://raw.githubusercontent.com/ludwig-loth/kompetenzeditor/main/screenshot.png)
+
 
 ## Tech Stack
 - Docker
@@ -163,4 +164,4 @@ http://127.0.0.1:8080/ui/
 -----------------------------------------------------------
 
 ## License
-- this Project is licensed under MIT License (https://mit-license.org/)
+- this Project is licensed under [MIT License](https://github.com/ludwig-loth/kompetenzeditor/blob/main/LICENSE.txt)
