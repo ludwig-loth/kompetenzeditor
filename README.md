@@ -1,22 +1,77 @@
+## Disclaimer
+This is an early version of my so-called "Kompetenzeditor" (competence editor). It was developed by me as part of a student project during a semester at Fulda University of Applied Sciences.
+This software is still at an early stage. I therefore advise against using it in production environments. Currently, I can't work on this project, so don't expect, much development from me here  in the near future.
+Overall, it is assumed that the authors have a basic understanding of the formulation and definition of learning objectives and competences.
+
 # Kompetenzeditor
+## What is this exactly?
+This is a competence editor. This software supports users in formulating competence descriptions in free text and inserting existing texts in order to check their suitability. The texts are analyzed according to certain criteria and, based on this, passive assistance is offered that the user can implement. A score is also calculated, which shows the user how ‘good’ or how close the text comes to an ‘ideal’ description of competences according to scientific criteria.
 
-## KNOWN BUGS
+Together with my professor at the time, I published a workshop paper on this software, which you can find here. (Unfortunately, this is only available in German).
+```
+Erstellung eines NLP-basierten Editors mit Qualitätsindikatoren und Änderungsvorschlägen für Kompetenzbeschreibungen}
+Loth, Ludwig; Konert, Johannes
+Proceedings of DELFI Workshops 2022
+Bonn: Gesellschaft für Informatik e. V. pp. 149–158.
+DELFI: Workshop. Karlsruhe. 12.-14. September 2022
+DOI: 10.18420/delfi2022-ws-32
+```
 
+> The software is currently only available in German and does not support any other language. Therefore, the following information will also be partly written in German.
+
+## Tech Stack
+- Docker
+- spaCy (NLP Software)
+- Vue.js
+- Nuxt.js
+- Vuetify
+- Dexie.js
+
+
+## know bugs and downsides
+- it currently only supports german
+   - the whole UI is written in german as well
 - `kennen` und `erkennen` im gleichen Test führen zu unerwartetem Verhalten
-  - kennen wird dann icht mehr als gutes Verb erkannt :(
+  - `kennen` wird dann icht mehr als gutes Verb erkannt
+- das einfügen von Text mit Listenelementen und anderem funktioniert nicht wie erwartet
+- die Response Time ist im Allgemeinen etwas langsam
 
-## Setup
 
+## Setup instructions
+  
 ### **spaCy Server**
 
-Dies ist ein vorgefertigter Docker-Container mit einer REST-API. 
+> Das Backend ist besteht aus einer bereits etablierten Software und ist nicht von mir entwickelt worden.
 
-Das wird diese Möglichkeit genutzt die eine vollständige REST API in einem Docker Container mit sich bringt https://github.com/bbieniek/spacy-api-docker
+Dies ist ein vorgefertigter Dockercontainer mit einer in Python geschriebenen REST-API. Dies bietet alle nötigen Möglichkeiten für das abfragen der NLP-gestützen Analyse von Texten 
+hier zu finden: https://github.com/bbieniek/spacy-api-docker
 
 Die REST API Dokumentation ist hier zu finden: https://hub.docker.com/r/bbieniek/spacyapi/
 
+- Laden Sie sich unter https://docs.docker.com/get-docker/ die für ihr Betriebssystem geeignete und neuste Version von Docker herunter.
+- Nun müssen Sie den entsprechenden Dockercontainer von spaCy mit deutschem Core  installieren, dazu öffnen Sie ein Terminal und tippen diesen Befehl ein `docker pull bbieniek/spacyapi:de_v3`
+- Tippen Sie diesen Befehl ein um den Container zu starten `docker run -p "127.0.0.1:8080:80" bbieniek/spacyapi:de_v3`
+- Nachdem der obige Befehl das erste Mal gegeben worden ist. Lässt sich der Container auch aus Docker Desktop heraus starten und beenden. Starten Sie Docker Desktop und starten Sie den Container dieser wird unter einem zufälligem Namen und der Bezeichnung \textbf{bbieniek/spacyapi} aufgeführt.
+- der Container ist nun gestartet und die REST-API von spaCy ist nun auf ihrer lokalen Maschine unter http://127.0.0.1:8080/ bzw. http://localhost/ erreichbar.
+- das UI zum testen von der NLP-Software erreichen Sie nun unter http://127.0.0.1:8080/ui/
+- Die Installation des Backendes ist hiermit abgeschlossen.
 
-#### **Lokale Möglichkeit:**
+
+### **Frontend: Kompetenzeditor Beta**
+
+- Falls Sie Node.js niocht bereits installiert haben dann laden Sie Node.js inklusive des Paketmanagers NPM von dieser Seite herunter \url{https://nodejs.org/en/} und installieren Sie dies anschließend in dem Sie den Anweisungen des Installers folgen
+- entpacken Sie den angehängten Ordner \textbf{kompetenzeditor.zip} in ein Verzeichnis Ihrer Wahl
+- Öffnen Sie ein Terminalfenster und navigieren Sie in der Verzeichnis \textbf{kompetenzeditor}
+- Geben Sie folgenden Befehl ein um die entsprechenden Pakete zu installieren 'npm install'
+- Generieren Sie zunächst die Dateien damit Nuxt.js diese zuordnen kann. Tippen Sie dazu folgendes in das Terminalfenster ein `npm run build`
+- Sobald der Build-Prozess abgeschlossen ist tippen Sie folgendes ein um den Editor endgültig zu starten `npm run start`
+- der Kompetenzeditor ist nun einsatzbereit und unter http://localhost:3000/ zu finden
+  
+> **WICHTIG**
+> Der Kompetenzeditor funktioniert nur in Verbindung mit dem Backend von spaCy. Deshalb müssen beide gestartet sein um die Software nutzen zu können.
+
+#### Zusammenfassung 
+##### **Lokale Möglichkeit:**
 
 - Docker installieren
 - Docker Container runterladen in der deutschen Version
@@ -26,7 +81,7 @@ Die REST API Dokumentation ist hier zu finden: https://hub.docker.com/r/bbieniek
 - Docker starten auf `http://127.0.0.1:8080/`:
   - `docker run -p "127.0.0.1:8080:80" bbieniek/spacyapi:de_v3`
 
-#### **Digital Ocean:**
+##### **Digital Ocean:**
 
 - App erstellen mit DockerHub direkt
 - Repository: `bbieniek/spacyapi`
@@ -37,7 +92,6 @@ Die REST API Dokumentation ist hier zu finden: https://hub.docker.com/r/bbieniek
 An dem `/ui` Endpoint wird eine UI zur Kontrolle erstellt.
 Aus bis jetzt unerklärlichen Gründen funktioniert es jedoch nicht.
 http://127.0.0.1:8080/ui/
-
 
 -----------------------------------------------------
 
@@ -108,99 +162,5 @@ http://127.0.0.1:8080/ui/
 
 -----------------------------------------------------------
 
-## Libaries/Frameworks
-### used / unused
-- [x] [vue.js](https://vuejs.org/)
-- [x] [vuetify](https://vuetifyjs.com/en/)
-- [ ] [vue-word-highlighter](https://github.com/kawamataryo/vue-word-highlighter)
-- [ ] [vue-text-highlight](https://github.com/AlbertLucianto/vue-text-highlight)
-- [ ] [wink-nlp ](https://github.com/winkjs/wink-nlp)
-- [ ] [natural](http://naturalnode.github.io/natural/)
-- [ ] [nlp.js](https://github.com/axa-group/nlp.js)
-- [ ] [vue-contenteditable](https://github.com/hl037/vue-contenteditable)
-- [x] [vue-highlightable-input](https://github.com/SyedWasiHaider/vue-highlightable-input)
-- [x] [dexie](https://dexie.org/)
-- [x] [js-levenshtein](https://github.com/gustf/js-levenshtein)
-- [ ] [nnsplit](https://github.com/bminixhofer/nnsplit) 
-- [ ] [spacy](https://github.com/ines/spacy-js)
-- [ ] [spacy-nlp](https://github.com/kengz/spacy-nlp)
-- [x] [vue-contenteditable](https://github.com/hl037/vue-contenteditable) 
-
-## Ideen
-- evtl. doch auf eine Client Server Arch setzen
-  - so kann man zb auf **spacy** oder **opennlp** setzen und von diesen auf einem Server eine Rest API zur Verfügung stellen lassen
-  - https://spacy.io/usage/rule-based-matching
-    - https://github.com/ines/spacy-js
-  - https://opennlp.apache.org/
-    - https://github.com/rbehzadan/opennlp-service
-
-
-# From here it's just nuxt.js default stuff:
-
-## Build Setup
-
-```bash
-# install dependencies
-$ npm install
-
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
-
-## Special Directories
-
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
-
-### `assets`
-
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
-
-### `components`
-
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
-
-### `layouts`
-
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
-
-
-### `pages`
-
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+## License
+- thius Project is licensed under MIT License (https://mit-license.org/)
