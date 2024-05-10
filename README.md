@@ -51,7 +51,7 @@ Die REST API Dokumentation ist hier zu finden: https://hub.docker.com/r/bbieniek
 - Laden Sie sich unter https://docs.docker.com/get-docker/ die für ihr Betriebssystem geeignete und neuste Version von Docker herunter.
 - Nun müssen Sie den entsprechenden Dockercontainer von spaCy mit deutschem Core  installieren, dazu öffnen Sie ein Terminal und tippen diesen Befehl ein `docker pull bbieniek/spacyapi:de_v3`
 - Tippen Sie diesen Befehl ein um den Container zu starten `docker run -p "127.0.0.1:8080:80" bbieniek/spacyapi:de_v3`
-- Nachdem der obige Befehl das erste Mal gegeben worden ist. Lässt sich der Container auch aus Docker Desktop heraus starten und beenden. Starten Sie Docker Desktop und starten Sie den Container dieser wird unter einem zufälligem Namen und der Bezeichnung \textbf{bbieniek/spacyapi} aufgeführt.
+- Nachdem der obige Befehl das erste Mal gegeben worden ist. Lässt sich der Container auch aus Docker Desktop heraus starten und beenden. Starten Sie Docker Desktop und starten Sie den Container dieser wird unter einem zufälligem Namen und der Bezeichnung **bbieniek/spacyapi** aufgeführt.
 - der Container ist nun gestartet und die REST-API von spaCy ist nun auf ihrer lokalen Maschine unter http://127.0.0.1:8080/ bzw. http://localhost/ erreichbar.
 - das UI zum testen von der NLP-Software erreichen Sie nun unter http://127.0.0.1:8080/ui/
 - Die Installation des Backendes ist hiermit abgeschlossen.
@@ -59,9 +59,9 @@ Die REST API Dokumentation ist hier zu finden: https://hub.docker.com/r/bbieniek
 
 ### **Frontend: Kompetenzeditor Beta**
 
-- Falls Sie Node.js niocht bereits installiert haben dann laden Sie Node.js inklusive des Paketmanagers NPM von dieser Seite herunter \url{https://nodejs.org/en/} und installieren Sie dies anschließend in dem Sie den Anweisungen des Installers folgen
-- entpacken Sie den angehängten Ordner \textbf{kompetenzeditor.zip} in ein Verzeichnis Ihrer Wahl
-- Öffnen Sie ein Terminalfenster und navigieren Sie in der Verzeichnis \textbf{kompetenzeditor}
+- Falls Sie Node.js niocht bereits installiert haben dann laden Sie Node.js inklusive des Paketmanagers NPM von dieser Seite herunter https://nodejs.org/en/ und installieren Sie dies anschließend in dem Sie den Anweisungen des Installers folgen
+- entpacken Sie den angehängten Ordner **kompetenzeditor.zip** in ein Verzeichnis Ihrer Wahl
+- Öffnen Sie ein Terminalfenster und navigieren Sie in der Verzeichnis **kompetenzeditor**
 - Geben Sie folgenden Befehl ein um die entsprechenden Pakete zu installieren 'npm install'
 - Generieren Sie zunächst die Dateien damit Nuxt.js diese zuordnen kann. Tippen Sie dazu folgendes in das Terminalfenster ein `npm run build`
 - Sobald der Build-Prozess abgeschlossen ist tippen Sie folgendes ein um den Editor endgültig zu starten `npm run start`
@@ -163,4 +163,4 @@ http://127.0.0.1:8080/ui/
 -----------------------------------------------------------
 
 ## License
-- thius Project is licensed under MIT License (https://mit-license.org/)
+- this Project is licensed under MIT License (https://mit-license.org/)
