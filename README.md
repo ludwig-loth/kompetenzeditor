@@ -8,6 +8,7 @@ Overall, it is assumed that the authors have a basic understanding of the formul
 This is a competence editor. This software supports users in formulating competence descriptions in free text and inserting existing texts in order to check their suitability. The texts are analyzed according to certain criteria and, based on this, passive assistance is offered that the user can implement. A score is also calculated, which shows the user how ‘good’ or how close the text comes to an ‘ideal’ description of competences according to scientific criteria.
 
 Together with my professor at the time, I published a workshop paper on this software, which you can find here. (Unfortunately, this is only available in German).
+https://dl.gi.de/items/ed3c8a09-79c0-4799-ba98-f7df219aad8d
 ```
 Erstellung eines NLP-basierten Editors mit Qualitätsindikatoren und Änderungsvorschlägen für Kompetenzbeschreibungen}
 Loth, Ludwig; Konert, Johannes
@@ -91,7 +92,6 @@ Die REST API Dokumentation ist hier zu finden: https://hub.docker.com/r/bbieniek
 - Problem ist, dass die UI nicht funktioniert hier
 
 An dem `/ui` Endpoint wird eine UI zur Kontrolle erstellt.
-Aus bis jetzt unerklärlichen Gründen funktioniert es jedoch nicht.
 http://127.0.0.1:8080/ui/
 
 -----------------------------------------------------
@@ -100,6 +100,7 @@ http://127.0.0.1:8080/ui/
 ## NLP 
 
 ### **Liste der Tags/Abkuerzungen/POS**
+Die ist hilfreich um zu verstehen, welche Verarbeitungen spaCy macht und um diese in dem UI unter dem Endpoint `/ui` entsprechend lesen zu können.
 
 | Tag | Description | Example |
 |---|---|---|
