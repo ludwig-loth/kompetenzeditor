@@ -17,7 +17,7 @@
     "core-js": "^3.15.1",
     "dexie": "^3.2.0",
     "js-levenshtein": "^1.1.6",
-    "nuxt": "^2.15.7",
+    "nuxt": "^3.12.4",
     "vue-contenteditable": "^1.0.2",
     "vue-highlightable-input": "^1.0.9",
     "vuetify": "^2.5.5"
